@@ -3,11 +3,11 @@ using ShopSystem.View;
 
 namespace ShopSystem.Control
 {
-    internal class AuthenticationControl
+    internal class AuthenticationController : MasterController
     {
         public void InitializeAuthentication()
         {
-            const int validInput = 0;
+            const int VALID_INPUT = 0;
             const int wrongUserName = 1;
             const int wrongPassword = 2;
 
@@ -32,12 +32,12 @@ namespace ShopSystem.Control
                 }
                 else
                 {
-                    wrongInput = validInput;
+                    wrongInput = VALID_INPUT;
                 }
 
                 if (wrongInput != 0)
                 {
-                    authenticationView.InitializeView(wrongInput, out usernameInput, out passwordInput);
+                    authenticationView.InvalidInput(wrongInput, out usernameInput, out passwordInput);
                 }
             }
             while (wrongInput != 0);

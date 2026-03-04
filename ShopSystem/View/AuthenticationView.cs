@@ -12,7 +12,7 @@
             passwordInput = Input();
         }
 
-        public void InitializeView(int invalidInput, out string usernameInput, out string passwordInput)
+        public void InvalidInput(int invalidInput, out string usernameInput, out string passwordInput)
         {
             Console.Clear();
             Console.WriteLine("\t-----Shop-----");

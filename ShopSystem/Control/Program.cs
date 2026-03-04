@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            AuthenticationControl auth = new AuthenticationControl();
+            AuthenticationController auth = new AuthenticationController();
+            MasterController master = new MasterController();
 
             auth.InitializeAuthentication();
         }
