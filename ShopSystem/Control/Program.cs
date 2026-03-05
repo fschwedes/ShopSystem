@@ -6,8 +6,10 @@
         {
             MasterController masterController = new MasterController();
             CustomerController customerController = new CustomerController();
+            AuthenticationController auth = new AuthenticationController();
 
             customerController.InitializeCustomerCatalog();
+            auth.InitializeAuthentication();
         }
     }
 }
