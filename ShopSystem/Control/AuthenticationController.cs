@@ -7,40 +7,49 @@ namespace ShopSystem.Control
     {
         public void InitializeAuthentication()
         {
-            const int VALID_INPUT = 0;
-            const int wrongUserName = 1;
-            const int wrongPassword = 2;
-
             AuthenticationView authenticationView = new AuthenticationView();
-            Account account = new Account("TestUsername", "TestPassword");
+            MasterController masterController = new MasterController();
 
-            int wrongInput;
             string usernameInput;
             string passwordInput;
 
             authenticationView.InitializeView(out usernameInput, out passwordInput);
+            CheckInput(authenticationView, masterController.Accounts(), ref usernameInput, ref passwordInput);
+        }
+
+        private void CheckInput(AuthenticationView authenticationView, List<Account> accounts, ref string usernameInput, ref string passwordInput)
+        {
+            bool matchingInputUsername;
+            bool matchingInputPassword;
 
             do
             {
-                if (usernameInput != account.Username)
+                matchingInputUsername = false;
+                matchingInputPassword = false;
+
+                foreach (Account account in accounts)
                 {
-                    wrongInput = wrongUserName;
-                }
-                else if (passwordInput != account.Password)
-                {
-                    wrongInput = wrongPassword;
-                }
-                else
-                {
-                    wrongInput = VALID_INPUT;
+                    if (account.Username == usernameInput)
+                    {
+                        matchingInputUsername = true;
+                        if (account.Password == passwordInput)
+                        {
+                            matchingInputPassword = true;
+                        }
+                        break;
+                    }
                 }
 
-                if (wrongInput != 0)
+                if (matchingInputUsername == false)
                 {
-                    authenticationView.InvalidInput(wrongInput, out usernameInput, out passwordInput);
+                    authenticationView.InvalidInputUsername(out usernameInput, out passwordInput);
+                }
+                else if (matchingInputPassword == false)
+                {
+                    authenticationView.InvalidInputPassword(out usernameInput, out passwordInput);
                 }
             }
-            while (wrongInput != 0);
+            while (!matchingInputUsername || !matchingInputPassword);
         }
     }
 }
