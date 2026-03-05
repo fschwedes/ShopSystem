@@ -5,36 +5,41 @@ namespace ShopSystem.Control
 {
     internal class AuthenticationController : MasterController
     {
-        public void InitializeAuthentication()
+        public int InitializeAuthentication()
         {
             AuthenticationView authenticationView = new AuthenticationView();
             MasterController masterController = new MasterController();
 
+            int activeUser;
             string usernameInput;
             string passwordInput;
 
             authenticationView.InitializeView(out usernameInput, out passwordInput);
-            CheckInput(authenticationView, masterController.Accounts(), ref usernameInput, ref passwordInput);
+            activeUser = CheckInput(authenticationView, masterController.Accounts(), ref usernameInput, ref passwordInput);
+
+            return activeUser;
         }
 
-        private void CheckInput(AuthenticationView authenticationView, List<Account> accounts, ref string usernameInput, ref string passwordInput)
+        private int CheckInput(AuthenticationView authenticationView, List<Account> accounts, ref string usernameInput, ref string passwordInput)
         {
             bool matchingInputUsername;
             bool matchingInputPassword;
+            int activeUser = 0;
 
             do
             {
                 matchingInputUsername = false;
                 matchingInputPassword = false;
 
-                foreach (Account account in accounts)
+                for (int i = 0; i < accounts.Count(); i++)
                 {
-                    if (account.Username == usernameInput)
+                    if (accounts[i].Username == usernameInput)
                     {
                         matchingInputUsername = true;
-                        if (account.Password == passwordInput)
+                        if (accounts[i].Password == passwordInput)
                         {
                             matchingInputPassword = true;
+                            activeUser = i;
                         }
                         break;
                     }
@@ -50,6 +55,8 @@ namespace ShopSystem.Control
                 }
             }
             while (!matchingInputUsername || !matchingInputPassword);
+
+            return activeUser;
         }
     }
 }

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
+﻿using ShopSystem.Model;
 using System.Text.Json;
-using ShopSystem.Model;
-using ShopSystem.View;
 
 namespace ShopSystem.Control
 {
@@ -14,11 +8,11 @@ namespace ShopSystem.Control
         private List<Item> _catalog;
         private List<Account> _accounts;
 
-        public MasterController() 
+
+        public MasterController()
         {
             init();
         }
-
 
         private void init()
         {
@@ -42,11 +36,20 @@ namespace ShopSystem.Control
 
             string pathItems = "files/items.json";
             string outputItems = File.ReadAllText(pathItems);
-            _catalog = JsonSerializer.Deserialize<List<Item>>(outputItems) 
+            _catalog = JsonSerializer.Deserialize<List<Item>>(outputItems)
                 ?? new List<Item>();
-
-
         }
+
+        public void Start()
+        {
+            AuthenticationController authenticationController = new AuthenticationController();
+            CustomerController customerController = new CustomerController();
+            int activeUser;
+
+            activeUser = authenticationController.InitializeAuthentication();
+            customerController.InitializeCustomerCatalog(activeUser);
+        }
+
 
         public List<Account> Accounts()
         { return _accounts; }
