@@ -12,20 +12,23 @@
             passwordInput = Input();
         }
 
-        public void InvalidInput(int invalidInput, out string usernameInput, out string passwordInput)
+        public void InvalidInputUsername(out string usernameInput, out string passwordInput)
         {
             Console.Clear();
             Console.WriteLine("\t-----Shop-----");
-            Console.Write("\nInvalid input: ");
-            switch (invalidInput)
-            {
-                case 1:
-                    Console.WriteLine("username not found");
-                    break;
-                case 2:
-                    Console.WriteLine("password is wrong");
-                    break;
-            }
+            Console.WriteLine("\nInvalid input: Username not found!");
+            Console.WriteLine("Please try again");
+            Console.Write("\nUsername: ");
+            usernameInput = Input();
+            Console.Write("Password: ");
+            passwordInput = Input();
+        }
+
+        public void InvalidInputPassword(out string usernameInput, out string passwordInput)
+        {
+            Console.Clear();
+            Console.WriteLine("\t-----Shop-----");
+            Console.WriteLine("\nInvalid input: Password incorrect!");
             Console.WriteLine("Please try again");
             Console.Write("\nUsername: ");
             usernameInput = Input();
