@@ -10,11 +10,11 @@ namespace ShopSystem.Model
         private string _description = "";
         private double _price;
 
-        public Item(string name, double price) 
-        {
-            _name = name;
-            _price = price;
-        }
+        //public Item(string name, double price) 
+        //{
+        //    _name = name;
+        //    _price = price;
+        //}
         public Item(string name, double price, string description)
         {
             _name = name;
