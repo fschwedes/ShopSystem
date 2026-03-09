@@ -5,51 +5,56 @@ namespace ShopSystem.Control
 {
     internal class AuthenticationController : MasterController
     {
-        public void InitializeAuthentication()
+        private AuthenticationView _authenticationView;
+        public AuthenticationController()
         {
-            AuthenticationView authenticationView = new AuthenticationView();
-            MasterController masterController = new MasterController();
-
-            string usernameInput;
-            string passwordInput;
-
-            authenticationView.InitializeView(out usernameInput, out passwordInput);
-            CheckInput(authenticationView, masterController.Accounts(), ref usernameInput, ref passwordInput);
+            _authenticationView = new AuthenticationView(this);
+            _authenticationView.Authenticate();
         }
-
-        private void CheckInput(AuthenticationView authenticationView, List<Account> accounts, ref string usernameInput, ref string passwordInput)
+        public void CheckInput(string username, string password)
         {
-            bool matchingInputUsername;
-            bool matchingInputPassword;
-
-            do
+            foreach (Account account in this.Accounts())
             {
-                matchingInputUsername = false;
-                matchingInputPassword = false;
-
-                foreach (Account account in accounts)
+                if (account.Username == username && account.Password == password)
                 {
-                    if (account.Username == usernameInput)
-                    {
-                        matchingInputUsername = true;
-                        if (account.Password == passwordInput)
-                        {
-                            matchingInputPassword = true;
-                        }
-                        break;
-                    }
-                }
-
-                if (matchingInputUsername == false)
-                {
-                    authenticationView.InvalidInputUsername(out usernameInput, out passwordInput);
-                }
-                else if (matchingInputPassword == false)
-                {
-                    authenticationView.InvalidInputPassword(out usernameInput, out passwordInput);
+                    this.Login(account);
+                    return;
                 }
             }
-            while (!matchingInputUsername || !matchingInputPassword);
+            _authenticationView.InvalidInput();
+
+
+            //do
+            //{
+            //    matchingInputUsername = false;
+            //    matchingInputPassword = false;
+
+            //    for (int i = 0; i < accounts.Count(); i++)
+            //    {
+            //        if (accounts[i].Username == usernameInput)
+            //        {
+            //            matchingInputUsername = true;
+            //            if (accounts[i].Password == passwordInput)
+            //            {
+            //                matchingInputPassword = true;
+            //                activeUser = i;
+            //            }
+            //            break;
+            //        }
+            //    }
+
+            //    if (matchingInputUsername == false)
+            //    {
+            //        authenticationView.InvalidInputUsername(out usernameInput, out passwordInput);
+            //    }
+            //    else if (matchingInputPassword == false)
+            //    {
+            //        authenticationView.InvalidInputPassword(out usernameInput, out passwordInput);
+            //    }
+            //}
+            //while (!matchingInputUsername || !matchingInputPassword);
+
+            //return activeUser;
         }
     }
 }

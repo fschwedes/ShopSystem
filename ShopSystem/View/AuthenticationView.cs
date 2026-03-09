@@ -1,45 +1,36 @@
-﻿namespace ShopSystem.View
+﻿using ShopSystem.Control;
+
+namespace ShopSystem.View
 {
     internal class AuthenticationView
     {
-        public void InitializeView(out string usernameInput, out string passwordInput)
+        private AuthenticationController controller;
+        public AuthenticationView(AuthenticationController controller)
         {
+            this.controller = controller;
+        }
+        public void Authenticate()
+        {
+            string username;
+            string password;
             Console.Clear();
             Console.WriteLine("\t-----Shop-----");
             Console.Write("\nPlease enter your username: ");
-            usernameInput = Input();
+            username = Console.ReadLine();
             Console.Write("Please enter your password: ");
-            passwordInput = Input();
+            password = Console.ReadLine();
+            controller.CheckInput(username, password);
         }
 
-        public void InvalidInputUsername(out string usernameInput, out string passwordInput)
+        public void InvalidInput()
         {
             Console.Clear();
             Console.WriteLine("\t-----Shop-----");
-            Console.WriteLine("\nInvalid input: Username not found!");
+            Console.WriteLine("\nInvalid input!");
             Console.WriteLine("Please try again");
-            Console.Write("\nUsername: ");
-            usernameInput = Input();
-            Console.Write("Password: ");
-            passwordInput = Input();
-        }
+            Console.ReadLine();
+            Authenticate();
 
-        public void InvalidInputPassword(out string usernameInput, out string passwordInput)
-        {
-            Console.Clear();
-            Console.WriteLine("\t-----Shop-----");
-            Console.WriteLine("\nInvalid input: Password incorrect!");
-            Console.WriteLine("Please try again");
-            Console.Write("\nUsername: ");
-            usernameInput = Input();
-            Console.Write("Password: ");
-            passwordInput = Input();
-        }
-
-        private string Input()
-        {
-            string input = Console.ReadLine();
-            return input;
         }
     }
 }
