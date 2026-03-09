@@ -7,6 +7,10 @@ namespace ShopSystem.Control
     {
         private List<Item> _catalog;
         private List<Account> _accounts;
+        private Account _activeUser;
+        private AuthenticationController _authenticationController;
+        private CustomerController _customerController;
+        private AdminController _adminController;
 
 
         public MasterController()
@@ -18,8 +22,8 @@ namespace ShopSystem.Control
         {
             //string path = "files/accounts.json";
             //Directory.CreateDirectory("files");
-            //List<Account> accounts = new List<Account>() { new Account("Test", "123")
-            //    , new Account("Test2", "321")};
+            //List<Account> accounts = new List<Account>() { new Account("Test", "123", false)
+            //    , new Account("Test2", "321", true)};
             //string json = JsonSerializer.Serialize(accounts);
             //File.WriteAllText(path, json);
 
@@ -29,8 +33,8 @@ namespace ShopSystem.Control
                 ?? new List<Account>();
 
             //string pathItems = "files/items.json";
-            //List<Item> catalog = new List<Item>() { new Item("Test", 13.5)
-            //    , new Item("Test2", 20, "This is a test")};
+            //List<Item> catalog = new List<Item>() { new Item("Test", 13.5, "", 1)
+            //    , new Item("Test2", 20, "This is a test", 2)};
             //string jsonItems = JsonSerializer.Serialize(catalog);
             //File.WriteAllText(pathItems, jsonItems);
 
@@ -42,12 +46,33 @@ namespace ShopSystem.Control
 
         public void Start()
         {
-            AuthenticationController authenticationController = new AuthenticationController();
-            CustomerController customerController = new CustomerController();
-            int activeUser;
+            _authenticationController = new AuthenticationController();
 
-            activeUser = authenticationController.InitializeAuthentication();
-            customerController.InitializeCustomerCatalog(activeUser);
+        }
+
+        public void Login(Account activeUser)
+        {
+            _activeUser = activeUser;
+            if (activeUser.IsAdmin == true)
+            {
+                _adminController = new AdminController();
+            }
+            else
+            {
+                _customerController = new CustomerController();
+            }
+        }
+
+        public void Exit()
+        {
+            string pathAccounts = "files/accounts.json";
+            //Directory.CreateDirectory("files");
+            string jsonAccounts = JsonSerializer.Serialize(_accounts);
+            File.WriteAllText(pathAccounts, jsonAccounts);
+
+            string pathItems = "files/items.json";
+            string jsonItems = JsonSerializer.Serialize(_catalog);
+            File.WriteAllText(pathItems, jsonItems);
         }
 
 
@@ -55,5 +80,7 @@ namespace ShopSystem.Control
         { return _accounts; }
         public List<Item> Catalog()
         { return _catalog; }
+        public Account ActiveUser()
+        { return _activeUser; }
     }
 }

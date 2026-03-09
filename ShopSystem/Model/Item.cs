@@ -9,24 +9,26 @@ namespace ShopSystem.Model
         private string _name;
         private string _description = "";
         private double _price;
-        private int _itemNumber;
 
-        //public Item(string name, double price) 
+        //public Item(string name, double price)
         //{
         //    _name = name;
         //    _price = price;
         //}
-        public Item(string name, double price, string description, int itemNumber)
+        public Item(string name, double price, string description)
         {
             _name = name;
             _price = price;
             _description = description;
-            _itemNumber = itemNumber;
+        }
+
+        public override string ToString()
+        {
+            return $"{_name} | {_price} | {_description}";
         }
 
         public string Name { get => _name; }
         public double Price { get => _price; }
         public string Description { get => _description; }
-        public int ItemNumber { get => _itemNumber; }
     }
 }

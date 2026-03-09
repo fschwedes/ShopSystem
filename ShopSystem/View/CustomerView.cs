@@ -1,45 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ShopSystem.Control;
 
 namespace ShopSystem.View
 {
     internal class CustomerView
     {
-        public void InitializeView()
+        private CustomerController _controller;
+        public CustomerView(CustomerController controller)
+        {
+            _controller = controller;
+        }
+        public void Header()
         {
             Console.Clear();
             Console.WriteLine("\t-----Shop-----");
-            Console.WriteLine("\n");
         }
 
-        public void ShowItem(string itemName, double itemPrice, int itemNumber)
+        public void ShowItem(string itemName, double itemPrice, int index)
         {
-            Console.Write(itemNumber + "  ");
+            Console.Write(index + 1 + "  ");
             Console.Write("\t" + itemName);
             Console.Write("\t\t" + itemPrice);
             Console.WriteLine("\tEUR");
         }
 
-        public string BuyInput()
+        //public string BuyInput()
+        //{
+        //    string input;
+        //    Console.Write("\nWhich item would you like to add to your shopping cart: ");
+        //    input = Console.ReadLine();
+        //    return input;
+        //}
+
+        public void InvalidInput()
         {
-            string input;
-            Console.Write("\nWhich item would you like to add to your shopping cart: ");
-            input = Console.ReadLine();
-            return input;
+            Console.Write("Input was invalid! Please use the numbers of the products!");
         }
 
-        public string InvalidInput()
+        public void ShowShoppingCart(int itemCount, double totalPrice)
         {
-            string input;
-            Console.Write("Input was invalid! Please use the numbers of the products: ");
-            input = Console.ReadLine();
-            return input;
+            Console.WriteLine();
+            Console.WriteLine($"Products in your shopping-cart: {itemCount}");
+            Console.WriteLine($"Total: {totalPrice} EUR");
+            Console.WriteLine();
         }
 
-        public void ShowShoppingCart()
+        public string AwaitInput()
         {
-            Console.WriteLine("\n");
+            Console.WriteLine();
+            Console.Write("Which item do you want to purchase (product numbers only): ");
+            return Console.ReadLine();
         }
+
+        public void Checkout(List<string> productNames, List<double> productPrices, double total)
+        {
+            Console.WriteLine("\nYour shopping-cart: \n");
+            for (int i = 0; i < productNames.Count(); i++)
+            {
+                Console.WriteLine($"\t{productNames[i]}\t{productPrices[i]} EUR");
+            }
+            Console.WriteLine($"\n\tTotal: {total} EUR");
+            Console.ReadLine();
+        }
+
     }
 }
