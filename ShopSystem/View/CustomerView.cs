@@ -23,14 +23,6 @@ namespace ShopSystem.View
             Console.WriteLine("\tEUR");
         }
 
-        //public string BuyInput()
-        //{
-        //    string input;
-        //    Console.Write("\nWhich item would you like to add to your shopping cart: ");
-        //    input = Console.ReadLine();
-        //    return input;
-        //}
-
         public void InvalidInput()
         {
             Console.Write("Input was invalid! Please use the numbers of the products!");

@@ -40,6 +40,7 @@ namespace ShopSystem.View
         {
             Console.WriteLine("\n'add' for new entry");
             Console.WriteLine("'remove' to delete entry");
+            Console.WriteLine("'back' for main menu");
             _adminController.DoSomethingForCatalog(Console.ReadLine());
         }
 
@@ -77,6 +78,7 @@ namespace ShopSystem.View
         {
             Console.WriteLine("\n'add' for new entry");
             Console.WriteLine("'remove' to delete entry");
+            Console.WriteLine("'back' for main menu");
             _adminController.DoSomethingForUsers(Console.ReadLine());
         }
 

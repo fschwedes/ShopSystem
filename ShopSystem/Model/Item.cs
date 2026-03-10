@@ -4,17 +4,13 @@ using System.Text;
 
 namespace ShopSystem.Model
 {
+    //model-klasse die informationen enthält aber keine logische verarbeitung der informationen
     internal class Item
     {
         private string _name;
         private string _description = "";
         private double _price;
 
-        //public Item(string name, double price)
-        //{
-        //    _name = name;
-        //    _price = price;
-        //}
         public Item(string name, double price, string description)
         {
             _name = name;
@@ -22,6 +18,7 @@ namespace ShopSystem.Model
             _description = description;
         }
 
+        //überschreibung der ToString methode um ein für den user lesbaren output zu bekommen
         public override string ToString()
         {
             return $"{_name} | {_price} | {_description}";

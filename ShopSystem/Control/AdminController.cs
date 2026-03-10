@@ -6,12 +6,16 @@ namespace ShopSystem.Control
     internal class AdminController : MasterController
     {
         private AdminView _adminView;
+
+        //bei instanziierung des admin controllers wird auch ein neues admin-view instanziiert
+            //und die methode DisplayOptions wird gestartet
         public AdminController()
         {
             _adminView = new AdminView(this);
             _adminView.DisplayOptions();
         }
 
+        //überprüfung der eingabe mit switch für verschiedene fälle
         public void CheckInput(string input)
         {
             switch (input)
@@ -32,6 +36,9 @@ namespace ShopSystem.Control
             }
         }
 
+        //---------------------------------------------------------------------
+        //methode falls der katalog geändert werden soll
+        //alle einträge dessen werden jeweils in einem string angezeigt
         private void EditCatalog()
         {
             List<string> catalog = new List<string>();
@@ -42,6 +49,7 @@ namespace ShopSystem.Control
             _adminView.DisplayCatalog(catalog);
         }
 
+        //abfrage was der admin mit dem katalog machen möchte mit switch
         public void DoSomethingForCatalog(string input)
         {
             switch (input.ToLower())
@@ -62,6 +70,7 @@ namespace ShopSystem.Control
             }
         }
 
+        //überprüfung und logik der benutzereingabe um einen eintrag zum katalog hinzuzufügen
         public void CatalogAdd(string inputItemName, string inputItemPrice, string inputItemDescription)
         {
             double itemPrice;
@@ -76,6 +85,8 @@ namespace ShopSystem.Control
                 _adminView.DisplayAddItemMessage();
             }
         }
+
+        //überprüfung und logik der benutzereingabe um einen eintrag des katalogs zu entfernen
         public void CatalogRemove(string input)
         {
             int index;
@@ -90,7 +101,12 @@ namespace ShopSystem.Control
             _adminView.InvalidInput();
             _adminView.DisplayRemoveItemMessage();
         }
+        //---------------------------------------------------------------------
 
+
+        //---------------------------------------------------------------------
+        //methode falls die accounts geändert werden sollen
+        //alle einträge dessen werden jeweils in einem string angezeigt
         private void EditUsers()
         {
             List<string> accounts = new List<string>();
@@ -101,6 +117,7 @@ namespace ShopSystem.Control
             _adminView.DisplayUsers(accounts);
         }
 
+        //abfrage was der admin mit den accounts machen möchte über switch
         public void DoSomethingForUsers(string input)
         {
             switch (input.ToLower())
@@ -121,6 +138,7 @@ namespace ShopSystem.Control
             }
         }
 
+        //überprüfung und logik der benutzereingabe um einen eintrag zu accounts hinzuzufügen
         public void UserAdd(string inputUserName, string inputUserPassword, string inputIsAdmin)
         {
             bool isAdmin;
@@ -135,6 +153,8 @@ namespace ShopSystem.Control
                 _adminView.DisplayAddUserMessage();
             }
         }
+
+        //überprüfung und logik der benutzereingabe um einen eintrag von accounts zu entfernen
         public void UserRemove(string input)
         {
             int index;
@@ -150,5 +170,6 @@ namespace ShopSystem.Control
             _adminView.InvalidInput();
             _adminView.DisplayRemoveUserMessage();
         }
+        //---------------------------------------------------------------------
     }
 }
