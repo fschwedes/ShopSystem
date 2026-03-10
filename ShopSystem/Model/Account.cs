@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ShopSystem.Model
 {
+    //model-klasse die informationen enthält aber keine logische verarbeitung der informationen
     internal class Account
     {
         private string _username;
@@ -21,6 +22,7 @@ namespace ShopSystem.Model
             _isAdmin = isAdmin;
         }
 
+        //überschreibung der ToString methode um ein für den user lesbaren output zu bekommen
         public override string ToString()
         {
             return $"{_username} | {_password} | {_isAdmin}";

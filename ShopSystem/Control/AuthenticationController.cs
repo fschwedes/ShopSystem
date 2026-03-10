@@ -6,11 +6,20 @@ namespace ShopSystem.Control
     internal class AuthenticationController : MasterController
     {
         private AuthenticationView _authenticationView;
+
+        //beim erstellen des authentifizierungs-controllers wird zusätzlich ein
+            //authentifizierungs-view instanziiert und der controller übergibt sich
+            //selbst als parameter
         public AuthenticationController()
         {
             _authenticationView = new AuthenticationView(this);
             _authenticationView.Authenticate();
         }
+
+        //einfache überprüfung ob eingaben des benutzernamen und passwort mit
+            //schon existierenden daten übereinstimmen.
+        //falls ja wird Login ausgeführt
+        //falls nein wird InvalidInput ausgeführt für erneute benutzereingabe
         public void CheckInput(string username, string password)
         {
             foreach (Account account in this.Accounts())
@@ -22,39 +31,6 @@ namespace ShopSystem.Control
                 }
             }
             _authenticationView.InvalidInput();
-
-
-            //do
-            //{
-            //    matchingInputUsername = false;
-            //    matchingInputPassword = false;
-
-            //    for (int i = 0; i < accounts.Count(); i++)
-            //    {
-            //        if (accounts[i].Username == usernameInput)
-            //        {
-            //            matchingInputUsername = true;
-            //            if (accounts[i].Password == passwordInput)
-            //            {
-            //                matchingInputPassword = true;
-            //                activeUser = i;
-            //            }
-            //            break;
-            //        }
-            //    }
-
-            //    if (matchingInputUsername == false)
-            //    {
-            //        authenticationView.InvalidInputUsername(out usernameInput, out passwordInput);
-            //    }
-            //    else if (matchingInputPassword == false)
-            //    {
-            //        authenticationView.InvalidInputPassword(out usernameInput, out passwordInput);
-            //    }
-            //}
-            //while (!matchingInputUsername || !matchingInputPassword);
-
-            //return activeUser;
         }
     }
 }

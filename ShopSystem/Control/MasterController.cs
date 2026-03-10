@@ -5,9 +5,13 @@ namespace ShopSystem.Control
 {
     internal class MasterController
     {
+        //felder die für die aktive session gebraucht werden und auch nur solange gespeichert sind
         private List<Item> _catalog;
         private List<Account> _accounts;
         private Account _activeUser;
+
+        //instanzen der verschiedenen controller die aufgerufen werden je nachdem wo das program
+            //gerade ist
         private AuthenticationController _authenticationController;
         private CustomerController _customerController;
         private AdminController _adminController;
@@ -18,8 +22,11 @@ namespace ShopSystem.Control
             init();
         }
 
+        //init um beim starten des program die informationen für accounts und items
+            //in die jeweiligen felder zu laden
         private void init()
         {
+            //------------------erstellen der datei und dateipfad------------------
             //string path = "files/accounts.json";
             //Directory.CreateDirectory("files");
             //List<Account> accounts = new List<Account>() { new Account("Test", "123", false)
@@ -32,6 +39,7 @@ namespace ShopSystem.Control
             _accounts = JsonSerializer.Deserialize<List<Account>>(output)
                 ?? new List<Account>();
 
+            //------------------erstellen der datei und dateipfad------------------
             //string pathItems = "files/items.json";
             //List<Item> catalog = new List<Item>() { new Item("Test", 13.5, "", 1)
             //    , new Item("Test2", 20, "This is a test", 2)};
@@ -44,12 +52,16 @@ namespace ShopSystem.Control
                 ?? new List<Item>();
         }
 
+        //beim starten des programs wird ein authentifizierungs-objekt erstellt um hier die logik
+            //zu starten
         public void Start()
         {
             _authenticationController = new AuthenticationController();
 
         }
 
+        //bei erfolgreicher überprüfung der nutzerdaten wird entweder als kunde oder
+            //admin eingeloggt und dementspechend ein jeweiliges objekt instanziiert
         public void Login(Account activeUser)
         {
             _activeUser = activeUser;
@@ -63,10 +75,10 @@ namespace ShopSystem.Control
             }
         }
 
+        //schließen des programs und speichern der felder in die jeweiligen dateien
         public void Exit()
         {
             string pathAccounts = "files/accounts.json";
-            //Directory.CreateDirectory("files");
             string jsonAccounts = JsonSerializer.Serialize(_accounts);
             File.WriteAllText(pathAccounts, jsonAccounts);
 

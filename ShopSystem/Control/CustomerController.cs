@@ -7,12 +7,17 @@ namespace ShopSystem.Control
     {
         private CustomerView _customerView;
         private List<Item> _shoppingCart;
+
+
         public CustomerController()
         {
             _customerView = new CustomerView(this);
             _shoppingCart = new List<Item>();
             Init();
         }
+
+        //bei initialisierung des customer-controllers wird die benutzeroblerfläche
+            //geupdated und eine neue einkaufs-session gestarted
         public void Init()
         {
             Update();
@@ -20,6 +25,7 @@ namespace ShopSystem.Control
 
         }
 
+        //aktualisierung der benutzeroberfläche
         private void Update()
         {
             _customerView.Header();
@@ -27,6 +33,10 @@ namespace ShopSystem.Control
             DisplayCatalog();
         }
 
+        //session wird gestarted mit einer schleife die beendet wird sobald der kunde
+            //exit schreibt und die gleichnamige methode wird ausgeführt
+        //mit checkout wird ein beleg ausgegeben und der warenkorb geleert
+        //bei eingeben der produktnummer wird diese zum warenkorb hinzugefügt
         private void StartSession()
         {
             string userInput;
@@ -77,6 +87,7 @@ namespace ShopSystem.Control
             Exit();
         }
 
+        //logik wie der katalog ausgegeben werden soll
         private void DisplayCatalog()
         {
             foreach (Item item in this.Catalog())
@@ -84,11 +95,14 @@ namespace ShopSystem.Control
                 _customerView.ShowItem(item.Name, item.Price, this.Catalog().IndexOf(item));
             }
         }
+
+        //logik wie der einkaufswagen ausgegeben werden soll
         private void DisplayShoppingCart()
         {
             _customerView.ShowShoppingCart(_shoppingCart.Count(), CalcTotalPrice());
         }
 
+        //logik wie der gesamtpreis des einkaufswagens berechnet wird
         private double CalcTotalPrice()
         {
             double totalPrice = 0;
@@ -100,38 +114,5 @@ namespace ShopSystem.Control
 
             return totalPrice;
         }
-
-        //private int CheckBuyInput(CustomerView customerView, MasterController masterController)
-        //{
-        //    bool check = true;
-        //    int orderNumber = 0;
-        //    do
-        //    {
-        //        if (!check)
-        //        {
-        //            check = int.TryParse(customerView.InvalidInput(), out orderNumber);
-        //        }
-        //        else
-        //        {
-        //            check = int.TryParse(customerView.BuyInput(), out orderNumber);
-        //        }
-
-        //        if (orderNumber > masterController.Catalog().Count() || orderNumber < 1)
-        //        {
-        //            check = false;
-        //        }
-
-        //    }
-        //    while (!check);
-        //    return orderNumber - 1;
-        //}
-
-        //private double AddItemToShoppingCart(MasterController masterController, int orderNumber, int activeUser)
-        //{
-        //    Item currentOrder;
-        //    currentOrder = masterController.Catalog()[orderNumber];
-        //    masterController.Accounts()[activeUser].ShoppingCart.Add(currentOrder);
-        //    return currentOrder.Price;
-        //}
     }
 }

@@ -4,10 +4,12 @@ namespace ShopSystem.View
 {
     internal class AuthenticationView
     {
-        private AuthenticationController controller;
+        private AuthenticationController _controller;
+
+        //der sich selbst übergebende controller wird hier referiert
         public AuthenticationView(AuthenticationController controller)
         {
-            this.controller = controller;
+            _controller = controller;
         }
         public void Authenticate()
         {
@@ -19,7 +21,7 @@ namespace ShopSystem.View
             username = Console.ReadLine();
             Console.Write("Please enter your password: ");
             password = Console.ReadLine();
-            controller.CheckInput(username, password);
+            _controller.CheckInput(username, password);
         }
 
         public void InvalidInput()
@@ -28,6 +30,7 @@ namespace ShopSystem.View
             Console.WriteLine("\t-----Shop-----");
             Console.WriteLine("\nInvalid input!");
             Console.WriteLine("Please try again");
+            Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
             Authenticate();
 
