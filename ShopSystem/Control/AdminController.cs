@@ -8,7 +8,7 @@ namespace ShopSystem.Control
         private AdminView _adminView;
 
         //bei instanziierung des admin controllers wird auch ein neues admin-view instanziiert
-            //und die methode DisplayOptions wird gestartet
+        //und die methode DisplayOptions wird gestartet
         public AdminController()
         {
             _adminView = new AdminView(this);
@@ -90,16 +90,17 @@ namespace ShopSystem.Control
         public void CatalogRemove(string input)
         {
             int index;
-            if (int.TryParse(input, out index))
+            if (int.TryParse(input, out index) && (index <= this.Catalog().Count() || index >= 0))
             {
-                if (index <= this.Catalog().Count() || index >= 0)
-                {
-                    this.Catalog().RemoveAt(index);
-                    _adminView.DisplayOptions();
-                }
+                this.Catalog().RemoveAt(index);
+                _adminView.DisplayOptions();
             }
-            _adminView.InvalidInput();
-            _adminView.DisplayRemoveItemMessage();
+            else
+            {
+                _adminView.InvalidInput();
+                _adminView.DisplayRemoveItemMessage();
+            }
+
         }
         //---------------------------------------------------------------------
 
@@ -158,17 +159,17 @@ namespace ShopSystem.Control
         public void UserRemove(string input)
         {
             int index;
-            if (int.TryParse(input, out index))
+            if (int.TryParse(input, out index) && (index >= 0 && index <= this.Accounts().Count()
+                    && this.Accounts()[index].IsAdmin == false))
             {
-                if (index >= 0 && index <= this.Accounts().Count()
-                    && this.Accounts()[index].IsAdmin == false)
-                {
-                    this.Accounts().RemoveAt(index);
-                    _adminView.DisplayOptions();
-                }
+                this.Accounts().RemoveAt(index);
+                _adminView.DisplayOptions();
             }
-            _adminView.InvalidInput();
-            _adminView.DisplayRemoveUserMessage();
+            else
+            {
+                _adminView.InvalidInput();
+                _adminView.DisplayRemoveUserMessage();
+            }
         }
         //---------------------------------------------------------------------
     }

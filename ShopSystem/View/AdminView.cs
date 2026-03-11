@@ -49,6 +49,7 @@ namespace ShopSystem.View
             Console.WriteLine("\nType in the index of the entry: ");
             _adminController.CatalogRemove(Console.ReadLine());
         }
+
         public void DisplayAddItemMessage()
         {
             string tempItemName;
@@ -74,6 +75,7 @@ namespace ShopSystem.View
             }
             DisplayAddOrRemoveUser();
         }
+
         public void DisplayAddOrRemoveUser()
         {
             Console.WriteLine("\n'add' for new entry");
